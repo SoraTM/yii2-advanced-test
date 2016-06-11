@@ -12,13 +12,18 @@ class m160607_095415_create_ticket extends Migration
     */
     public function up()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('ticket', [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
             'phone' => $this->string()->notNull(),
             'brand_id' => $this->integer()->notNull(),
             'product_id' => $this->integer()->notNull(),
-        ]);
+        ], $tableOptions);
 
         $this->addForeignKey(
         'fk-ticket-product_id',

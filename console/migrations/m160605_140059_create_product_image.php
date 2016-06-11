@@ -12,11 +12,16 @@ class m160605_140059_create_product_image extends Migration
      */
     public function up()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('product_image', [
             'id' => $this->primaryKey(),
             'product_id' => $this->integer()->notNull(),
             'path' => $this->string()->notNull(),
-        ]);
+        ], $tableOptions);
 
         $this->addForeignKey(
             'fk-product_image-product_id',
